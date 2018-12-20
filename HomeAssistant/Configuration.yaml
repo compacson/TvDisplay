@@ -1,0 +1,47 @@
+homeassistant:
+  name: Home
+  latitude: 46.357119
+  longitude:  -72.574608
+  elevation: 0
+  unit_system: metric
+  time_zone: UTC
+  customize: !include customize.yaml
+
+frontend:
+
+config:
+http:
+updater:
+history:
+sun:
+
+group: !include groups.yaml
+script: !include scripts.yaml
+
+mqtt:
+  broker: 127.0.0.1
+
+
+switch:
+  - platform: mqtt
+    command_topic: "enseigne/switch"
+    state_topic: "enseigne/status"
+
+automation:
+  - alias: 'Allumer coucher de Soleil'
+    trigger:
+      platform: sun
+      event: sunset
+      offset: "-00:10:00"
+    action:
+      service: homeassistant.turn_on
+      entity_id: switch.mqtt_switch
+
+  - alias: 'Fermer Lever Soleil'
+    trigger:
+      platform: sun
+      event: sunrise
+      offset: "+00:10:00"
+    action:
+      service: homeassistant.turn_off
+      entity_id: switch.mqtt_switch
