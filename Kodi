@@ -1,0 +1,8 @@
+# Permet de auto jouer le fichier /storage/videos/ et de repeter pour lecran en avant.
+# place at ~/.kodi/userdata/autoexec.py
+
+import xbmc
+
+xbmc.executebuiltin('PlayMedia("/storage/videos/","isdir")')
+xbmc.executebuiltin('xbmc.PlayerControl(repeatall)')
+xbmc.executebuiltin("Action(Fullscreen)")
